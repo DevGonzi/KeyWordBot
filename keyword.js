@@ -33,7 +33,7 @@ let handle = async function (client, msg, guildId) {
 					msg.channel.send("An error occurred while adding the keyword, please contact <@321373026488811520>!");
 				};
 				// log who is add keywords
-				log.info(`${name} added by ${msg.author.tag} | userId: ${msg.author.id}`);
+				log.console(`${name} added by ${msg.author.tag} | userId: ${msg.author.id}`);
 				pool.query(`INSERT INTO log (keyword, task, discordtag, discordid) VALUES ("${name}", "add", "${msg.author.tag}", "${msg.author.id}");`, function (err, res, fields) {
 					if (err) {
 						log.error(err);
@@ -65,7 +65,7 @@ let handle = async function (client, msg, guildId) {
 					msg.channel.send("An error occurred while delete the keyword, please contact <@321373026488811520>!");
 				};
 				// log who is deleting keywords
-				log.info(`${name} removed by ${msg.author.tag} | userId: ${msg.author.id}`);
+				log.console(`${name} removed by ${msg.author.tag} | userId: ${msg.author.id}`);
 				pool.query(`INSERT INTO log (keyword, task, discordtag, discordid) VALUES ("${name}", "delete", "${msg.author.tag}", "${msg.author.id}");`, function (err, res, fields) {
 					if (err) {
 						log.error(err);
@@ -102,7 +102,7 @@ let handle = async function (client, msg, guildId) {
 					return msg.delete(2500);
 				}
 				// log who is changeing keywords
-				log.info(`${keywordname} changed by ${msg.author.tag} | userId: ${msg.author.id}`);
+				log.console(`${keywordname} changed by ${msg.author.tag} | userId: ${msg.author.id}`);
 				pool.query(`INSERT INTO log (keyword, task, discordtag, discordid) VALUES (\"${keywordname}\", \"change\", \"${msg.author.tag}\", \"${msg.author.id}\");`, function (err, res, fields) {
 					if (err) {
 						log.error(err);
@@ -237,7 +237,7 @@ let handle = async function (client, msg, guildId) {
 					if (err) {
 						msg.react(`❌`);
 						// msg.delete(2500);
-						log.info("err while updating usecount")
+						log.console("err while updating usecount")
 						log.error(err);
 					}
 				});
@@ -259,7 +259,7 @@ let handle = async function (client, msg, guildId) {
 							if (err) {
 								msg.react(`❌`);
 								// msg.delete(2500);
-								log.info("err while updating usecount")
+								log.console("err while updating usecount")
 								log.error(err);
 							}
 						});

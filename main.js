@@ -19,7 +19,7 @@ let botprefix = "\x1b[93m[BOT]\x1b[0m";
 
 // if bot is ready (started and connected)
 client.on('ready', () => {
-	log.info(`${botprefix} Verbunden als ${client.user.tag}`);
+	log.console(`${botprefix} Verbunden als ${client.user.tag}`);
 
 	// client.channels.get("742787346520473600").send("Bot Gestartet!"); // Msg an server log
 

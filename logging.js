@@ -58,28 +58,6 @@ let error = async function (text) {
     };
 };
 
-// log for infos
-let info = async function (text) {
-    date = new Date();
-    timestamp = (`${(date.getMonth()+1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}/${date.getFullYear().toString().padStart(4, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`)
-    text = "[" + timestamp + "] " + text + "\n";
-    try {
-        if (fs.existsSync(infoLogFile)) {
-            fs.appendFile(infoLogFile, text, function (err) {
-                if (err) throw err;
-            });
-        } else {
-            let stream = fs.createWriteStream(infoLogFile);
-            stream.once('open', function (fd) {
-                stream.write(text + "\n");
-                stream.end();
-            });
-        };
-    } catch (err) {
-        console.error(err);
-    };
-};
-
 // log all to file and show it in the console
 let consolelog = async function (text) {
     date = new Date();
@@ -129,7 +107,6 @@ let keyword = async function (text) {
 
 // export the functions
 module.exports = {
-    info: info,
     error: error,
     console: consolelog,
     keyword: keyword
