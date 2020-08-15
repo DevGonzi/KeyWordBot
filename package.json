@@ -1,0 +1,30 @@
+{
+  "name": "statusbot",
+  "version": "1.0.0",
+  "description": "Ein Discord Bot",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "discord.js": "^11.5.1",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "mysql": "^2.18.1",
+    "nodemon": "^1.19.4",
+    "util": "^0.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node main.js",
+    "test": "nodemon main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dergonzi/StatusBot.git"
+  },
+  "author": "gonzi <info@dergonzi.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dergonzi/StatusBot/issues"
+  },
+  "homepage": "https://github.com/dergonzi/StatusBot#readme"
+}
