@@ -83,10 +83,10 @@ let handle = async function (client, msg, guildId) {
 		let keywordname = data[0];
 		let beschreibung = data[1];
 
-		if (!newkeyword) return msg.channel.send("Du solltest schon etwas angeben!");
-		if (!data) return msg.channel.send("Error: missing data");
-		if (!keywordname) return msg.channel.send("Fehler 303");
-		if (!beschreibung) return msg.channel.send("Fehler 304");
+		if (!newkeyword) return msg.channel.send("Error: Syntax: $+Keyword;Description");
+		if (!data) return msg.channel.send("Error: Syntax: $+Keyword;Description");
+		if (!keywordname) return msg.channel.send("Error: keyword name missing! \nSyntax: $+Keyword;Description");
+		if (!beschreibung) return msg.channel.send("Error: Description missing! \nSyntax: $+Keyword;Description");
 
 		pool.query(`UPDATE keyworddb SET keyworddb.beschreibung = "${beschreibung}" WHERE keyword = "${keywordname}" and guildId = ?`, (guildId), function (err, res, fields) {
 			const itemaddmsg = new Discord.RichEmbed()
@@ -98,7 +98,8 @@ let handle = async function (client, msg, guildId) {
 			msg.channel.send(itemaddmsg);
 			if (err) {
 				log.error(err);
-				msg.channel.send("Es ist ein Fehler beim ändern des Keywords aufgetreten, bitte wende dich an <@321373026488811520>!");
+				msg.channel.send("An error occurred while change the keyword, please contact <@321373026488811520>!");
+
 				// return msg.react(`❌`);
 				return msg.delete(2500);
 			}
@@ -122,7 +123,7 @@ let handle = async function (client, msg, guildId) {
 			.setTitle('KeyWordBot Commands:')
 			.addField(`$KEYWORD`, `Queries the keyword from the database and displays it with description.`)
 			.addField(`$list`, `List all Keywords.`)
-			.addField(`$+Keyword;Description`, `Erstellt das Keyword.`)
+			.addField(`$+Keyword;Description`, `Creates a new Keyword.`)
 			.addField(`$~Keyword;Description`, `CHANGES the description of the Keyword.`)
 			.addField(`$-Keyword`, `**Deletes** the Keyword.`)
 			.setTimestamp()
@@ -147,12 +148,12 @@ let handle = async function (client, msg, guildId) {
 			});
 			if (err) {
 				log.error(err);
-				msg.channel.send('Fehler!');
+				msg.channel.send('Error!');
 				// msg.react(`❌`);
 				msg.delete(2500);
 			} else {
 				if (res.length <= 0) {
-					msg.channel.send('Die Liste ist Leer!');
+					msg.channel.send('The list is empty!');
 				} else {
 					const itemaddmsg = new Discord.RichEmbed()
 						.setColor('#0099ff')
@@ -182,7 +183,7 @@ let handle = async function (client, msg, guildId) {
 			});
 			if (err) {
 				log.error(err);
-				msg.channel.send('Fehler!');
+				msg.channel.send('Error!');
 				// msg.react(`❌`);
 				msg.delete(2500);
 			} else {
@@ -205,7 +206,19 @@ let handle = async function (client, msg, guildId) {
 		let msglow = msg.content.toLowerCase();
 		let keyword = msglow.substr(1);
 
-		console.log("test")
+
+
+		pool.query('SELECT keyword FROM keyworddb WHERE guildId = ?', (guildId), function (err, res, fields) {
+			if (err) {
+				log.error(err);
+				msg.channel.send('Error!');
+				msg.delete(2500);
+			} else {
+				if (res.length <= 0) return log.console(`No keywords for guild ${guildId} found!`)
+			};
+		});
+
+
 		pool.query('SELECT * FROM keyworddb WHERE keyword = ? AND guildId = ? ORDER BY keyworddb.id DESC', [keyword, guildId], function (err, res, fields) {
 
 			// log.info(res[0])
@@ -223,7 +236,7 @@ let handle = async function (client, msg, guildId) {
 					.setColor('#0099ff')
 					.setTitle('Information:')
 					.addField(`Keyword: `, `${keywordfromdb}`)
-					.addField(`Beschreibung: `, `${text}`)
+					.addField(`Description: `, `${text}`)
 					.setTimestamp()
 					.setFooter(`Keyword requested from ${msg.author.tag}`);
 				msg.channel.send(itemaddmsg);
@@ -246,7 +259,7 @@ let handle = async function (client, msg, guildId) {
 							.setColor('#0099ff')
 							.setTitle('Information:')
 							.addField(`Keyword: `, `${keywordfromdb}`)
-							.addField(`Beschreibung: `, `${text}`)
+							.addField(`Description: `, `${text}`)
 							.setTimestamp()
 							.setFooter(`Keyword requested from ${msg.author.tag}`);
 						msg.channel.send(itemaddmsg);
@@ -263,7 +276,7 @@ let handle = async function (client, msg, guildId) {
 					} else {
 						const itemaddmsg = new Discord.RichEmbed()
 							.setColor('#ff0000')
-							.setTitle('Keyword **NICHT** Gefunden!')
+							.setTitle('Keyword **not** found!')
 							.addField(`Keyword: `, `${keyword}`)
 							.setTimestamp()
 							.setFooter(`Keyword requested from ${msg.author.tag}`);
