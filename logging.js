@@ -1,7 +1,6 @@
 "use strict";
 let fs = require('fs');
 
-let infoLogFile = "./log/info.log";
 let errorLogFile = "./log/error.log";
 let consoleLogFile = "./log/console.log";
 let keywordLogFile = "./log/KeyWord.log";
@@ -31,7 +30,7 @@ fs.readdir("./log/", (err, files) => {
 
         fs.rename(oldPath, newPath, function (err) {
             if (err) throw err
-            info('Successfully moved old logs');
+            console('Successfully moved old logs');
         });
     });
 });
