@@ -27,6 +27,7 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
+    if (!msg.guild || msg.author.bot) return;
 	keyword.handle(client, msg, msg.guild.id);
 });
 

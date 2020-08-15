@@ -30,7 +30,7 @@ fs.readdir("./log/", (err, files) => {
 
         fs.rename(oldPath, newPath, function (err) {
             if (err) throw err
-            console('Successfully moved old logs');
+            consolelog('Successfully moved old logs');
         });
     });
 });
@@ -98,7 +98,7 @@ let keyword = async function (text) {
             });
         };
     } catch (err) {
-        console.error(err);
+        consolelog.error(err);
     };
 };
 
