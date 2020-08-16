@@ -204,6 +204,7 @@ let handle = async function (client, msg, guildId) {
 	} else if (msg.content.startsWith('$')) {
 		let msglow = msg.content.toLowerCase();
 		let keyword = msglow.substr(1);
+		if(keyword.length == 0) return;
 		pool.query('SELECT keyword FROM keyworddb WHERE guildId = ?', (guildId), function (err, res, fields) {
 			if (err) {
 				log.error(err);
