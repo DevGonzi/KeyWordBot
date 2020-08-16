@@ -114,8 +114,8 @@ let handle = async function (client, msg, guildId) {
 			msg.delete(2500);
 		};
 		// help command
-	} else if (msg.content.startsWith('$bothelp')) {
-		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES'))) {
+	} else if (msg.content.startsWith('$bothelp') || msg.content.startsWith('$help')) {
+		// if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES'))) {
 			const itemaddmsg = new Discord.RichEmbed()
 				.setColor('#0099ff')
 				.setTitle('KeyWordBot Commands:')
@@ -128,7 +128,7 @@ let handle = async function (client, msg, guildId) {
 				.setFooter(`bothelp requested from ${msg.author.tag}`);
 			msg.channel.send(itemaddmsg);
 			msg.delete(2500);
-		};
+		// };
 		// list command
 	} else if (msg.content.startsWith('$list')) {
 		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES'))) {
