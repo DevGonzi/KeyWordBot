@@ -1,17 +1,19 @@
 "use strict";
 let fs = require('fs');
 
-let errorLogFile = "./log/error.log";
-let consoleLogFile = "./log/console.log";
-let keywordLogFile = "./log/KeyWord.log";
+let errorLogFile = "./logs/error.log";
+let consoleLogFile = "./logs/console.log";
+let keywordLogFile = "./logs/KeyWord.log";
 
 let date = new Date();
 let timestamp;
 // create date for timestamp in logging
 
 
+if (!fs.existsSync(`./logs/`)) fs.mkdirSync(`./logs/`);
+if (!fs.existsSync(`./logs/old/`)) fs.mkdirSync(`./logs/old/`);
 
-fs.readdir("./log/", (err, files) => {
+fs.readdir("./logs/", (err, files) => {
     if (err) return error(err);
 
     // timestamp for log directory
@@ -23,10 +25,10 @@ fs.readdir("./log/", (err, files) => {
         return bot(`${botprefix} Keine Logs vorhanden!`);
     };
     // create folder
-    fs.mkdirSync(`./log/old/${logstamp}`);
+    fs.mkdirSync(`./logs/old/${logstamp}`);
     logfile.forEach(file => {
-        var oldPath = `./log/${file}`;
-        var newPath = `./log/old/${logstamp}/${file}`;
+        var oldPath = `./logs/${file}`;
+        var newPath = `./logs/old/${logstamp}/${file}`;
 
         fs.rename(oldPath, newPath, function (err) {
             if (err) throw err
