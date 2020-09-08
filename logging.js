@@ -22,7 +22,7 @@ fs.readdir("./logs/", (err, files) => {
 
     let logfile = files.filter(f => f.split(".").pop() === "log");
     if (logfile.length <= 0) {
-        return bot(`${botprefix} Keine Logs vorhanden!`);
+        return consolelog(`${botprefix} Keine Logs vorhanden!`);
     };
     // create folder
     fs.mkdirSync(`./logs/old/${logstamp}`);
