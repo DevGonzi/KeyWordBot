@@ -1,8 +1,8 @@
 const Discord = require('discord.js');
 
 const fs = require('fs');
-const pool = require('./database');
-const log = require('./logging')
+const pool = require('./handler/database');
+const log = require('./handler/logging')
 
 
 let handle = async function (client, msg, guildId) {

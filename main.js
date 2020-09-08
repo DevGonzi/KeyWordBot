@@ -7,8 +7,10 @@ const fs = require('fs');
 const client = new Discord.Client();
 
 // load logging
-const log = require('./logging.js');
+const log = require('./handler/logging.js');
 const keyword = require('./keyword.js')
+const update = require('./util/update.js')
+
 
 // load bot config.json file and parse data
 let cfgData = fs.readFileSync('./config.json');
@@ -22,6 +24,11 @@ client.on('ready', () => {
 	log.console(`${botprefix} Verbunden als ${client.user.tag}`);
 
 	// client.channels.get("742787346520473600").send("Bot Gestartet!"); // Msg an server log
+
+	update.check(client);
+	setInterval(() => {
+		update.check(client);
+	}, 300000);
 
 	client.user.setActivity(`$help | Servers: ${client.guilds.size}`).catch(log.error);
 });

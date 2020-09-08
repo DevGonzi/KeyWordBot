@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const config = require("../config.json");
-const log = require('../logging.js');
+const log = require('../handler/logging.js');
 
 module.exports = async (client, msg) => {
     // guild commands
