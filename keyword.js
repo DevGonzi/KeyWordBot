@@ -4,12 +4,14 @@ const fs = require('fs');
 const pool = require('./handler/database');
 const log = require('./handler/logging')
 
+const idGonzi = "321373026488811520";
+
 
 let handle = async function (client, msg, guildId) {
 
 	// add keyword [10*]
 	if (msg.content.startsWith('$+')) {
-		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES'))) {
+		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES')) || msg.author.id === idGonzi) {
 			let newkeyword = msg.content.substr(2);
 			if (!newkeyword) return msg.channel.send("Error: Syntax: $+Keyword;Description");
 			let data = newkeyword.split(';');
@@ -43,7 +45,7 @@ let handle = async function (client, msg, guildId) {
 			msg.delete(2500);
 		};
 	} else if (msg.content.startsWith('$-')) {
-		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES'))) {
+		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES')) || msg.author.id === idGonzi) {
 			let newkeyword = msg.content.substr(2);
 			let data = newkeyword.split(';');
 			let name = data[0];
@@ -75,7 +77,7 @@ let handle = async function (client, msg, guildId) {
 			msg.delete(2500);
 		};
 	} else if (msg.content.startsWith('$~')) {
-		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES'))) {
+		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES')) || msg.author.id === idGonzi) {
 			let newkeyword = msg.content.substr(2);
 			let data = newkeyword.split(';');
 			let keywordname = data[0];
@@ -115,7 +117,7 @@ let handle = async function (client, msg, guildId) {
 		};
 		// help command
 	} else if (msg.content.startsWith('$bothelp') || msg.content.startsWith('$help')) {
-		// if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES'))) {
+		// if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES')) || msg.author.id === idGonzi) {
 			const itemaddmsg = new Discord.RichEmbed()
 				.setColor('#0099ff')
 				.setTitle('KeyWordBot Commands:')
@@ -131,7 +133,7 @@ let handle = async function (client, msg, guildId) {
 		// };
 		// list command
 	} else if (msg.content.startsWith('$list')) {
-		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES'))) {
+		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES')) || msg.author.id === idGonzi) {
 			let m = msg.content.split(' ');
 			pool.query('SELECT keyword FROM keyworddb WHERE guildId = ?', (guildId), function (err, res, fields) {
 				let keywordlist = [];
@@ -167,7 +169,8 @@ let handle = async function (client, msg, guildId) {
 		};
 		// extlist command
 	} else if (msg.content.startsWith('$extlist')) {
-		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES'))) {
+		console.log(msg.author.id === idGonzi)
+		if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES')) || msg.author.id === idGonzi) {
 			let m = msg.content.split(' ');
 			pool.query('SELECT * FROM keyworddb WHERE guildId = ?', (guildId), function (err, res, fields) {
 				let keywordlist = [];
