@@ -1,7 +1,4 @@
-const {
-    exec
-} = require("child_process");
-const embed = require('./embed.js');
+const { exec } = require("child_process");
 
 // fetch();
 console.log("Load update manager")
@@ -24,12 +21,6 @@ let check = async function (client) {
         // console.log(`stdout: ${stdout}`);
 
         if (!stdout.includes("Already up to date") && !stdout.includes("Bereits aktuell.")) {
-            let fields = {
-                name: 'Auto Updated on Startup',
-                value: 'restart in 5 seconds',
-                inline: false
-            };
-            embed.send(client, "752904720515072373", undefined, "#00ff3c", "Bot Updated", fields, `AutoUpdated`, true);
             let supportGuild = client.guilds.get('744193604787896382');
             channel = supportGuild.channels.get('750255957258272768');
             outages.send("restart due to an update in 5 minutes");
