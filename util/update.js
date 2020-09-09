@@ -1,4 +1,6 @@
-const  {exec} = require("child_process");
+const {
+    exec
+} = require("child_process");
 const embed = require('./embed.js');
 
 // fetch();
@@ -24,14 +26,18 @@ let check = async function (client) {
         if (!stdout.includes("Already up to date") && !stdout.includes("Bereits aktuell.")) {
             let fields = {
                 name: 'Auto Updated on Startup',
-                value: 'restart in 5 seconds', 
+                value: 'restart in 5 seconds',
                 inline: false
             };
             embed.send(client, "752904720515072373", undefined, "#00ff3c", "Bot Updated", fields, `AutoUpdated`, true);
-            console.log("Fetched from Git, restart in 5 seconds");
+            let supportGuild = client.guilds.get('744193604787896382');
+            channel = supportGuild.channels.get('750255957258272768');
+            outages.send("restart due to an update in 5 minutes");
+
+            console.log("Fetched from Git, restart in 5 minutes");
             setTimeout(() => {
                 process.exit(0);
-            }, 5000);
+            }, 300000);
         } else {
             console.log("Bot is up to date!");
         }
