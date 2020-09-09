@@ -1,5 +1,5 @@
 {
-  "name": "statusbot",
+  "name": "keywordbot",
   "version": "1.0.0",
   "description": "Ein Discord Bot",
   "main": "index.js",
@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dergonzi/StatusBot.git"
+    "url": "git+https://github.com/dergonzi/keywordbot.git"
   },
   "author": "gonzi <info@dergonzi.de>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dergonzi/StatusBot/issues"
+    "url": "https://github.com/dergonzi/keywordbot/issues"
   },
-  "homepage": "https://github.com/dergonzi/StatusBot#readme"
+  "homepage": "https://github.com/dergonzi/keywordbot#readme"
 }
