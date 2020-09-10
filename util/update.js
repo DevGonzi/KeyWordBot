@@ -21,8 +21,8 @@ let check = async function (client) {
         // console.log(`stdout: ${stdout}`);
 
         if (!stdout.includes("Already up to date") && !stdout.includes("Bereits aktuell.")) {
-            let supportGuild = client.guilds.get('744193604787896382');
-            outages = supportGuild.channels.get('750255957258272768');
+            let supportGuild = client.guilds.cache.get('744193604787896382');
+            outages = supportGuild.channels.cache.get('750255957258272768');
             if (outages) {
                 outages.send("restart due to an update in 5 minutes");
             };

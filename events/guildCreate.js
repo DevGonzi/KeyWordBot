@@ -8,21 +8,21 @@ module.exports = async (client, guild) => {
 
     console.log("Joined a new guild: " + guild.name);
 
-    client.user.setActivity(`$help | Servers: ${client.guilds.size}`).catch(log.error);;
+    client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`).catch(log.error);;
 
 
-    let sendGuild = client.guilds.get('744193604787896382');
+    let sendGuild = client.guilds.cache.get('744193604787896382');
 
     if (guild) {
-        channel = sendGuild.channels.get('752798339686465556');
+        channel = sendGuild.channels.cache.get('752798339686465556');
         if (channel) {
 
-            const itemaddmsg = new Discord.RichEmbed()
+            const itemaddmsg = new Discord.MessageEmbed()
                 .setColor('#11ff00')
                 .setTitle('Bot **joined**!')
                 .addField(`Server name: `, `${guild.name}`, true)
                 .addField(`Server ID: `, `${guild.id}`, true)
-                .addField(`Server Owner`, client.users.get(guild.ownerID), true)
+                .addField(`Server Owner`, client.users.cache.get(guild.ownerID), true)
                 .addField(`Server Owner ID: `, `${guild.ownerID}`, true)
                 .setTimestamp()
                 .setFooter(`Thanks for using me!`);
