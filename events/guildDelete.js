@@ -7,7 +7,7 @@ module.exports = async (client, guild) => {
 
     let guildArray = client.guilds.array();
 
-    console.log("Joined a new guild: " + guild.name);
+    console.log("Kicked from a guild: " + guild.name);
 
     client.user.setActivity(`$help | Servers: ${client.guilds.size}`).catch(log.error);
 
