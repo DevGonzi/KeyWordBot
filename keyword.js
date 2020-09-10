@@ -22,7 +22,7 @@ let handle = async function (client, msg, guildId) {
 			if (!beschreibung) return msg.channel.send("Error: Syntax: $+Keyword;Description");
 
 			pool.query(`INSERT INTO keyworddb(keyword, beschreibung, eingetragen, guildId) VALUES('${name}', '${beschreibung}', '${msg.author.tag}', '${guildId}')`, function (err, res, fields) {
-				const itemaddmsg = new Discord.RichEmbed()
+				const itemaddmsg = new Discord.MessageEmbed()
 					.setColor('#11ff00')
 					.setTitle('Keyword **added**!')
 					.addField(`Keyword: `, `${name}`)
@@ -55,7 +55,7 @@ let handle = async function (client, msg, guildId) {
 			if (!name) return msg.channel.send("Error: Syntax: $-Keyword");
 
 			pool.query(`DELETE FROM keyworddb WHERE keyworddb.keyword = "${name}"and guildId = ? AND keyworddb.isGlobal = "0"`, (guildId), function (err, res, fields) {
-				const itemaddmsg = new Discord.RichEmbed()
+				const itemaddmsg = new Discord.MessageEmbed()
 					.setColor('#0099ff')
 					.setTitle('Keyword **deleted**!')
 					.addField(`Keyword: `, `${name}`)
@@ -89,7 +89,7 @@ let handle = async function (client, msg, guildId) {
 			if (!beschreibung) return msg.channel.send("Error: Description missing! \nSyntax: $+Keyword;Description");
 
 			pool.query(`UPDATE keyworddb SET keyworddb.beschreibung = "${beschreibung}" WHERE keyword = "${keywordname}" AND guildId = ? AND isGlobal = "0" `, (guildId), function (err, res, fields) {
-				const itemaddmsg = new Discord.RichEmbed()
+				const itemaddmsg = new Discord.MessageEmbed()
 					.setColor('#ffe100')
 					.setTitle('Keyword **changed**!')
 					.addField(`Keyword: `, `${keywordname}`)
@@ -118,7 +118,7 @@ let handle = async function (client, msg, guildId) {
 		// help command
 	} else if (msg.content.startsWith('$bothelp') || msg.content.startsWith('$help')) {
 		// if (msg.member.roles.find(role => role.hasPermission('ADMINISTRATOR')) || msg.member.roles.find(role => role.hasPermission('MANAGE_MESSAGES')) || msg.author.id === idGonzi) {
-			const itemaddmsg = new Discord.RichEmbed()
+			const itemaddmsg = new Discord.MessageEmbed()
 				.setColor('#0099ff')
 				.setTitle('KeyWordBot Commands:')
 				.addField(`$KEYWORD`, `Queries the keyword from the database and displays it with description.`)
@@ -155,7 +155,7 @@ let handle = async function (client, msg, guildId) {
 					if (res.length <= 0) {
 						msg.channel.send('The list is empty!');
 					} else {
-						const itemaddmsg = new Discord.RichEmbed()
+						const itemaddmsg = new Discord.MessageEmbed()
 							.setColor('#0099ff')
 							.setTitle('KeyWord-list:')
 							.setDescription("Type `$KEYWORD` to show the information.")
@@ -201,7 +201,7 @@ let handle = async function (client, msg, guildId) {
 					if (res.length <= 0) {
 						msg.channel.send('The list is empty!');
 					} else {
-						const itemaddmsg = new Discord.RichEmbed()
+						const itemaddmsg = new Discord.MessageEmbed()
 							.setColor('#0099ff')
 							.setTitle('Extended KeyWordlist:')
 							.setDescription('Function to see how often the keywords are used')
@@ -229,7 +229,7 @@ let handle = async function (client, msg, guildId) {
 			if (res[0]) {
 				let keywordfromdb = res[0].keyword;
 				let text = res[0].beschreibung;
-				const itemaddmsg = new Discord.RichEmbed()
+				const itemaddmsg = new Discord.MessageEmbed()
 					.setColor('#0099ff')
 					.setTitle('Information:')
 					.addField(`Keyword: `, `${keywordfromdb}`)
@@ -253,7 +253,7 @@ let handle = async function (client, msg, guildId) {
 
 // funktion to send "keyword not found"
 function sendNotFound(keyword, msg, guildId) {
-	const itemaddmsg = new Discord.RichEmbed()
+	const itemaddmsg = new Discord.MessageEmbed()
 		.setColor('#ff0000')
 		.setTitle('Keyword **not** found!')
 		.addField(`Keyword: `, `${keyword}`)

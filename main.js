@@ -23,14 +23,12 @@ let botprefix = "\x1b[93m[BOT]\x1b[0m";
 client.on('ready', () => {
 	log.console(`${botprefix} Verbunden als ${client.user.tag}`);
 
-	// client.channels.get("742787346520473600").send("Bot Gestartet!"); // Msg an server log
-
 	update.check(client);
 	setInterval(() => {
 		update.check(client);
 	}, 300000);
 
-	client.user.setActivity(`$help | Servers: ${client.guilds.size}`).catch(log.error);
+	client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`).catch(log.error);
 });
 
 client.on('message', msg => {

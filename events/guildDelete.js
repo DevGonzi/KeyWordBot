@@ -9,14 +9,14 @@ module.exports = async (client, guild) => {
 
     console.log("Kicked from a guild: " + guild.name);
 
-    client.user.setActivity(`$help | Servers: ${client.guilds.size}`).catch(log.error);
+    client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`).catch(log.error);
 
-    let sendGuild = client.guilds.get('744193604787896382');
+    let sendGuild = client.guilds.cache.get('744193604787896382');
 
     if (guild) {
-        channel = sendGuild.channels.get('752798339686465556');
+        channel = sendGuild.channels.cache.get('752798339686465556');
         if (channel) {
-            const itemaddmsg = new Discord.RichEmbed()
+            const itemaddmsg = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Bot **kicked**!')
                 .addField(`Server name: `, `${guild.name}`)
