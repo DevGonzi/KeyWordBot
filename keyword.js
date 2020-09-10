@@ -54,7 +54,7 @@ let handle = async function (client, msg, guildId) {
 			if (!data) return msg.channel.send("Error: Syntax: $-Keyword");
 			if (!name) return msg.channel.send("Error: Syntax: $-Keyword");
 
-			pool.query(`DELETE FROM keyworddb WHERE keyworddb.keyword = "${name}"`, function (err, res, fields) {
+			pool.query(`DELETE FROM keyworddb WHERE keyworddb.keyword = "${name}"and guildId = ? AND keyworddb.isGlobal = "0"`, (guildId), function (err, res, fields) {
 				const itemaddmsg = new Discord.RichEmbed()
 					.setColor('#0099ff')
 					.setTitle('Keyword **deleted**!')
@@ -208,21 +208,13 @@ let handle = async function (client, msg, guildId) {
 		let msglow = msg.content.toLowerCase();
 		let keyword = msglow.substr(1);
 		if(keyword.length == 0) return;
-		pool.query('SELECT keyword FROM keyworddb WHERE guildId = ?', (guildId), function (err, res, fields) {
-			if (err) {
-				log.error(err);
-				msg.channel.send('Error!');
-				msg.delete(2500);
-			} else {
-				if (res.length <= 0) return log.console(`No keywords for guild ${guildId} found!`)
-			};
-		});
 
-		pool.query('SELECT * FROM keyworddb WHERE keyword = ? AND guildId = ? ORDER BY keyworddb.id DESC', [keyword, guildId], function (err, res, fields) {
+		pool.query('SELECT * FROM keyworddb WHERE keyword = ? AND guildId = ? OR keyword = ? AND isGlobal = "1" OR alias = ? AND guildId = ? OR alias = ? AND isGlobal = "1" ORDER BY keyworddb.id DESC', [keyword, guildId, keyword, keyword, guildId, keyword], function (err, res, fields) {
 			if (res[0]) {
 				log.keyword(`Keyword "${keyword}" requested by ${msg.author.tag}! \ndb res: ${res[0].keyword}`);
 			} else {
 				log.keyword(`Keyword "${keyword}" requested by ${msg.author.tag}! \nNOT found in DB!`);
+				return sendNotFound(keyword, msg, guildId)
 			};
 
 			if (res[0]) {
@@ -245,44 +237,59 @@ let handle = async function (client, msg, guildId) {
 						log.error(err);
 					}
 				});
-			} else {
-				pool.query('SELECT * FROM keyworddb WHERE alias = ? ORDER BY keyworddb.id DESC', (keyword), function (err, res, fields) {
-					if (res[0]) {
-						let keywordfromdb = res[0].keyword;
-						let text = res[0].beschreibung;
-						const itemaddmsg = new Discord.RichEmbed()
-							.setColor('#0099ff')
-							.setTitle('Information:')
-							.addField(`Keyword: `, `${keywordfromdb}`)
-							.addField(`Description: `, `${text}`)
-							.setTimestamp()
-							.setFooter(`Keyword requested from ${msg.author.tag}`);
-						msg.channel.send(itemaddmsg);
-						msg.delete(2500);
-						pool.query(`UPDATE keyworddb SET keyworddb.usecount = usecount+1 WHERE keyword = "${keywordfromdb}"`, function (err, res, fields) {
-							if (err) {
-								msg.react(`❌`);
-								// msg.delete(2500);
-								log.console("err while updating usecount")
-								log.error(err);
-							}
-						});
-					} else {
-						const itemaddmsg = new Discord.RichEmbed()
-							.setColor('#ff0000')
-							.setTitle('Keyword **not** found!')
-							.addField(`Keyword: `, `${keyword}`)
-							.setTimestamp()
-							.setFooter(`Keyword requested from ${msg.author.tag}`);
-						msg.channel.send(itemaddmsg);
-						// msg.react(`❌`);
-						msg.delete(2500);
-					}
-				});
-			};
+			}
+// 			} else {
+// 				pool.query('SELECT * FROM keyworddb WHERE alias = ? AND guildId = ? OR alias = ? AND isGlobal = "1" ORDER BY keyworddb.id DESC', [keyword, guildId, keyword], function (err, res, fields) {
+// 					if (res[0]) {
+// 						let keywordfromdb = res[0].keyword;
+// 						let text = res[0].beschreibung;
+// 						const itemaddmsg = new Discord.RichEmbed()
+// 							.setColor('#0099ff')
+// 							.setTitle('Information:')
+// 							.addField(`Keyword: `, `${keywordfromdb}`)
+// 							.addField(`Description: `, `${text}`)
+// 							.setTimestamp()
+// 							.setFooter(`Keyword requested from ${msg.author.tag}`);
+// 						msg.channel.send(itemaddmsg);
+// 						msg.delete(2500);
+
+// 						pool.query(`UPDATE keyworddb SET keyworddb.usecount = usecount+1 WHERE keyword = ? AND guildId = ?`, [keywordfromdb, guildId], function (err, res, fields) {
+// 							if (err) {
+// 								msg.react(`❌`);
+// 								// msg.delete(2500);
+// 								log.console("err while updating usecount")
+// 								log.error(err);
+// 							}
+// 						});
+// 					} else {
+// 						const itemaddmsg = new Discord.RichEmbed()
+// 							.setColor('#ff0000')
+// 							.setTitle('Keyword **not** found!')
+// 							.addField(`Keyword: `, `${keyword}`)
+// 							.setTimestamp()
+// 							.setFooter(`Keyword requested from ${msg.author.tag}`);
+// 						msg.channel.send(itemaddmsg);
+// 						// msg.react(`❌`);
+// 						msg.delete(2500);
+// 					}
+// 				});
+// 			};
 		});
 	};
 };
+
+function sendNotFound(keyword, msg, guildId) {
+	const itemaddmsg = new Discord.RichEmbed()
+		.setColor('#ff0000')
+		.setTitle('Keyword **not** found!')
+		.addField(`Keyword: `, `${keyword}`)
+		.setTimestamp()
+		.setFooter(`Keyword requested from ${msg.author.tag}`);
+	msg.channel.send(itemaddmsg);
+	msg.react(`❌`);
+	// msg.delete(2500);
+	return log.console(`No keywords for guild ${guildId} found!`);
+}
 
 // export the functions
 module.exports = {
