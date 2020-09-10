@@ -8,6 +8,9 @@ module.exports = async (client, guild) => {
 
     console.log("Joined a new guild: " + guild.name);
 
+    client.user.setActivity(`$help | Servers: ${client.guilds.size}`).catch(log.error);;
+
+
     let sendGuild = client.guilds.get('744193604787896382');
 
     if (guild) {
@@ -17,13 +20,14 @@ module.exports = async (client, guild) => {
             const itemaddmsg = new Discord.RichEmbed()
                 .setColor('#11ff00')
                 .setTitle('Bot **joined**!')
-                .addField(`Server name: `, `${guild.name}`)
-                .addField(`Server ID: `, `${guild.id}`)
-                .addField(`Server Owner ID: `, `${guild.ownerID}`)
+                .addField(`Server name: `, `${guild.name}`, true)
+                .addField(`Server ID: `, `${guild.id}`, true)
+                .addField(`Server Owner`, client.users.get(guild.ownerID), true)
+                .addField(`Server Owner ID: `, `${guild.ownerID}`, true)
                 .setTimestamp()
                 .setFooter(`Thanks for using me!`);
-            channel.send(itemaddmsg);
-        } else {
+                channel.send(itemaddmsg);
+            } else {
             console.log("There's no channel with that ID.");
         };
     };
