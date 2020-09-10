@@ -173,13 +173,21 @@ let handle = async function (client, msg, guildId) {
 			let m = msg.content.split(' ');
 			// console.log(m[1])
 			pool.query('SELECT * FROM keyworddb WHERE guildId = ?', (guildId), function (err, res, fields) {
+				console.log(res.length)
+				if(res.length >= 25) {
+					console.log("bigger then 25")
+				}
+
 				let keywordlist = [];
 				let count = 0;
 				res.forEach((res) => {
 					count++;
 					if (count >= 1) {
-						console.log(count)
 						keywordlist.push("\n" + res.keyword + " **|** " + res.usecount)
+						if(count >= 25) keywordlist2.push("\n" + res.keyword + " **|** " + res.usecount)
+						else if(count >= 50) keywordlist2.push("\n" + res.keyword + " **|** " + res.usecount)
+						else if(count >= 75) keywordlist3.push("\n" + res.keyword + " **|** " + res.usecount)
+						else if(count >= 100) keywordlist3.push("\n" + res.keyword + " **|** " + res.usecount)
 					} else {
 						keywordlist.push(res.keyword + " **|** " + res.usecount)
 					}
