@@ -23,7 +23,9 @@ let check = async function (client) {
         if (!stdout.includes("Already up to date") && !stdout.includes("Bereits aktuell.")) {
             let supportGuild = client.guilds.get('744193604787896382');
             outages = supportGuild.channels.get('750255957258272768');
-            outages.send("restart due to an update in 5 minutes");
+            if (outages) {
+                outages.send("restart due to an update in 5 minutes");
+            };
 
             console.log("Fetched from Git, restart in 5 minutes");
             setTimeout(() => {
