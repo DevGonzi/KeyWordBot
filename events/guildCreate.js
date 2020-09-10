@@ -8,7 +8,7 @@ module.exports = async (client, guild) => {
 
     console.log("Joined a new guild: " + guild.name);
 
-    client.user.setActivity(`$help | Servers: ${client.guildskeywordbot}`).catch(log.error);
+    client.user.setActivity(`$help | Servers: ${client.guilds.size}`).catch(log.error);;
 
 
     let sendGuild = client.guilds.get('744193604787896382');
