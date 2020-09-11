@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const util = require('./../util/util.js');
 
 module.exports.run = async (client, msg, args) => {
   String.prototype.toHHMMSS = function () {
@@ -15,7 +16,7 @@ module.exports.run = async (client, msg, args) => {
   var t = uptime.split(':');
   msg.channel.send('Der Bot läuft seit ' + t[0] + ' Stunden, ' + t[1] + ' Minuten und ' + t[2] + ' Sekunden!');
   msg.react(`✅`);
-  msg.delete(1500);
+  util.delmsg(msg, 1500);
 };
 
 module.exports.config = {
