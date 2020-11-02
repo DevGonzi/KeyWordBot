@@ -31,9 +31,9 @@ let check = async function (client) {
             setTimeout(() => {
                 process.exit(0);
             }, 300000);
-        } else {
-            console.log("Bot is up to date!");
-        }
+        }// else {
+            // console.log("Bot is up to date!");
+        //}
     });
 };
 
