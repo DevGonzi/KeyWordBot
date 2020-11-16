@@ -4,8 +4,6 @@ const log = require('../handler/logging.js');
 
 module.exports = async (client, guild) => {
     // guild commands
-    let guildArray = client.guilds.array();
-
     console.log("Joined a new guild: " + guild.name);
 
     client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`).catch(log.error);;
