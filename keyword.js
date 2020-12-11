@@ -139,6 +139,7 @@ let handle = async function (client, msg, guildId) {
 			pool.query('SELECT keyword FROM keyworddb WHERE guildId = ?', (guildId), function (err, res, fields) {
 				let keywordlist = [];
 				let count = 0;
+				if(!res) return log.error("!res", JSON.stringify(res))
 				res.forEach((res) => {
 					count++;
 					if (count >= 1) {
