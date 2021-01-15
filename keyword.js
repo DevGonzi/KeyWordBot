@@ -31,7 +31,7 @@ let handle = async function (client, msg, guildId) {
 };
 
 class Permissions {
-    static manageKeyWords(msg) {
+    static manageKeyWords(client, msg) {
         let user = msg.member;
         if (user.roles.cache.find(role => role.permissions.has('ADMINISTRATOR')) || user.roles.cache.find(role => role.permissions.has('MANAGE_MESSAGES')) || msg.author.id === idGonzi) return true;
         else return false;
