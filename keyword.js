@@ -16,11 +16,11 @@ let handle = async function (client, msg, guildId) {
         const itemaddmsg = new Discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('KeyWordBot Commands:')
-            .addField(`$KEYWORD`, `Queries the keyword from the database and displays it with description.`)
+            .addField(`$<KEYWORD>`, `Queries the keyword from the database and displays it with description.`)
             // .addField(`$list`, `List all Keywords.`)
-            .addField(`$+Keyword;Description`, `Creates a new Keyword.`)
-            .addField(`$~Keyword;Description`, `CHANGES the description of the Keyword.`)
-            .addField(`$-Keyword`, `**Deletes** the Keyword.`)
+            .addField(`$+<Keyword>;<Description>`, `Creates a new Keyword.`)
+            .addField(`$~<Keyword>;<New Description>`, `CHANGES the description of the Keyword.`)
+            .addField(`$-<Keyword>`, `**Deletes** the Keyword.`)
             .setTimestamp()
             .setFooter(`bothelp requested from ${msg.author.tag}`);
         msg.channel.send(itemaddmsg);
