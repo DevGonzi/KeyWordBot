@@ -29,6 +29,7 @@ client.on('ready', () => {
     }, 300000);
 
     client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`).catch(log.error);
+    // client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`, {type: 'CUSTOM_STATUS'}).catch(log.error);
 });
 
 client.on('message', msg => {
