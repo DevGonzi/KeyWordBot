@@ -17,7 +17,7 @@ let handle = async function (client, msg, guildId) {
             .setColor('#0099ff')
             .setTitle('KeyWordBot Commands:')
             .addField(`$KEYWORD`, `Queries the keyword from the database and displays it with description.`)
-            .addField(`$list`, `List all Keywords.`)
+            // .addField(`$list`, `List all Keywords.`)
             .addField(`$+Keyword;Description`, `Creates a new Keyword.`)
             .addField(`$~Keyword;Description`, `CHANGES the description of the Keyword.`)
             .addField(`$-Keyword`, `**Deletes** the Keyword.`)
