@@ -26,7 +26,7 @@ let handle = async function (client, msg, guildId) {
         msg.channel.send(itemaddmsg);
         util.delmsg(msg, 2500);
     } else if (msg.content.startsWith('$')) {
-        Database.requestKeyWord(client, msg), guildId;
+        Database.requestKeyWord(client, msg, guildId);
     }
 };
 
@@ -50,7 +50,7 @@ class Database {
         if (!beschreibung) return msg.channel.send('Error: Syntax: $+Keyword;Description');
 
         pool.query(`INSERT INTO keyworddb(keyword, beschreibung, eingetragen, guildId) VALUES('${name}', '${beschreibung}', '${msg.author.tag}', '${guildId}')`, function (err, res, fields) {
-            const itemaddmsg = new Discord.MessageEmbed().setColor('#11ff00').setTitle('Keyword **added**!').addField(`Keyword: `, `${name}`).addField(`Description: `, `${beschreibung}`).setTimestamp().setFooter(`Keyword requested from ${msg.author.tag}`);
+            const itemaddmsg = new Discord.MessageEmbed().setColor('#11ff00').setTitle('Keyword **added**!').addField(`Keyword: `, `${name}`).addField(`Description: `, `${beschreibung}`).setTimestamp().setFooter(`Keyword added by ${msg.author.tag}`);
             msg.channel.send(itemaddmsg);
             if (err) {
                 log.error(err);
@@ -147,7 +147,7 @@ class Database {
                 if (res[0]) {
                     let keywordfromdb = res[0].keyword;
                     let text = res[0].beschreibung;
-                    const itemaddmsg = new Discord.MessageEmbed().setColor('#0099ff').setTitle('Information:').addField(`Keyword: `, `${keywordfromdb}`).addField(`Description: `, `${text}`).setTimestamp().setFooter(`Keyword requested from ${msg.author.tag}`);
+                    const itemaddmsg = new Discord.MessageEmbed().setColor('#0099ff').setTitle('KeyWord Information:').addField(`Keyword: `, `${keywordfromdb}`).addField(`Description: `, `${text}`).setTimestamp().setFooter(`Keyword requested from ${msg.author.tag}`);
                     msg.channel.send(itemaddmsg);
                     util.delmsg(msg, 2500);
                     Database.addUseCount(keywordfromdb, msg.guild.id);
