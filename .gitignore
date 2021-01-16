@@ -108,3 +108,5 @@ node_modules
 
 #logs
 log
+
+config.json
