@@ -23,10 +23,12 @@ let botprefix = '\x1b[93m[BOT]\x1b[0m';
 client.on('ready', () => {
     log.console(`${botprefix} Verbunden als ${client.user.tag}`);
 
-    update.check(client);
-    setInterval(() => {
+    if (botData.isDev == false) {
         update.check(client);
-    }, 300000);
+        setInterval(() => {
+            update.check(client);
+        }, 300000);
+    }
 
     client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`).catch(log.error);
     // client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`, {type: 'CUSTOM_STATUS'}).catch(log.error);
