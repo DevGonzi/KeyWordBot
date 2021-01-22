@@ -28,10 +28,7 @@ client.on('ready', () => {
         }, 300000);
     }
 
-    client.user
-        .setPresence({activity: {name: `$help | Serving ${client.guilds.cache.size} Servers`}, status: 'dnd'})
-        // .then(console.log)
-        .catch(log.error);
+    client.user.setPresence({activity: {name: `$help | Serving ${client.guilds.cache.size} Servers`}, status: 'dnd'}).catch(log.error);
 });
 
 client.on('message', msg => {
