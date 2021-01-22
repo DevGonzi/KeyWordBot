@@ -28,8 +28,10 @@ client.on('ready', () => {
         }, 300000);
     }
 
-    client.user.setStatus('dbd').catch(log.error);
-    client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`).catch(log.error);
+    client.user
+        .setPresence({activity: {name: `$help | Serving ${client.guilds.cache.size} Servers`}, status: 'dnd'})
+        // .then(console.log)
+        .catch(log.error);
 });
 
 client.on('message', msg => {
