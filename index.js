@@ -10,8 +10,6 @@ const log = require('./handler/logging.js');
 const keyword = require('./keyword.js');
 const update = require('./util/update.js');
 
-const k = require('./keyword.js');
-
 // load bot config.json file and parse data
 let cfgData = fs.readFileSync('./config.json');
 let botData = JSON.parse(cfgData);
@@ -31,7 +29,7 @@ client.on('ready', () => {
     }
 
     client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`).catch(log.error);
-    // client.user.setActivity(`$help | Servers: ${client.guilds.cache.size}`, {type: 'CUSTOM_STATUS'}).catch(log.error);
+    client.user.setStatus('dbd').catch(log.error);
 });
 
 client.on('message', msg => {
