@@ -7,7 +7,7 @@ const client = new Discord.Client();
 
 // load logging
 const log = require('./handler/logging.js');
-const keyword = require('./keyword.js');
+const {KeyWord} = require('./keyword.js');
 const update = require('./util/update.js');
 
 // load bot config.json file and parse data
@@ -34,7 +34,7 @@ client.on('ready', () => {
 
 client.on('message', msg => {
     if (!msg.guild || msg.author.bot) return;
-    keyword.handle(client, msg, msg.guild.id);
+    KeyWord.handle(client, msg, msg.guild.id);
 });
 
 // Events und Commands aus den Ordnern "events" und "commands" laden

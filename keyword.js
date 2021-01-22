@@ -5,30 +5,32 @@ const log = require('./handler/logging.js');
 const util = require('./util/util.js');
 const idGonzi = '321373026488811520';
 
-let handle = async function (client, msg, guildId) {
-    if (msg.content.startsWith('$+')) {
-        if (Permissions.manageKeyWords(client, msg)) Database.addKeyWord(client, msg, guildId);
-    } else if (msg.content.startsWith('$-')) {
-        if (Permissions.manageKeyWords(client, msg)) Database.deleteKeyWord(client, msg, guildId);
-    } else if (msg.content.startsWith('$~')) {
-        if (Permissions.manageKeyWords(client, msg)) Database.changeKeyWord(client, msg, guildId);
-    } else if (msg.content.startsWith('$bothelp') || msg.content.startsWith('$help')) {
-        const itemaddmsg = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('KeyWordBot Commands:')
-            .addField(`$<KEYWORD>`, `Queries the keyword from the database and displays it with description.`)
-            // .addField(`$list`, `List all Keywords.`)
-            .addField(`$+<Keyword>;<Description>`, `Creates a new Keyword.`)
-            .addField(`$~<Keyword>;<New Description>`, `CHANGES the description of the Keyword.`)
-            .addField(`$-<Keyword>`, `**Deletes** the Keyword.`)
-            .setTimestamp()
-            .setFooter(`bothelp requested from ${msg.author.tag}`);
-        msg.channel.send(itemaddmsg);
-        util.delmsg(msg, 2500);
-    } else if (msg.content.startsWith('$')) {
-        Database.requestKeyWord(client, msg, guildId);
+class KeyWord {
+    static async handle(client, msg, guildId) {
+        if (msg.content.startsWith('$+')) {
+            if (Permissions.manageKeyWords(client, msg)) Database.addKeyWord(client, msg, guildId);
+        } else if (msg.content.startsWith('$-')) {
+            if (Permissions.manageKeyWords(client, msg)) Database.deleteKeyWord(client, msg, guildId);
+        } else if (msg.content.startsWith('$~')) {
+            if (Permissions.manageKeyWords(client, msg)) Database.changeKeyWord(client, msg, guildId);
+        } else if (msg.content.startsWith('$bothelp') || msg.content.startsWith('$help')) {
+            const itemaddmsg = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('KeyWordBot Commands:')
+                .addField(`$<KEYWORD>`, `Queries the keyword from the database and displays it with description.`)
+                // .addField(`$list`, `List all Keywords.`)
+                .addField(`$+<Keyword>;<Description>`, `Creates a new Keyword.`)
+                .addField(`$~<Keyword>;<New Description>`, `CHANGES the description of the Keyword.`)
+                .addField(`$-<Keyword>`, `**Deletes** the Keyword.`)
+                .setTimestamp()
+                .setFooter(`bothelp requested from ${msg.author.tag}`);
+            msg.channel.send(itemaddmsg);
+            util.delmsg(msg, 2500);
+        } else if (msg.content.startsWith('$')) {
+            Database.requestKeyWord(client, msg, guildId);
+        }
     }
-};
+}
 
 class Permissions {
     static manageKeyWords(client, msg) {
@@ -183,5 +185,5 @@ class actions {
 
 // export the functions
 module.exports = {
-    handle: handle,
+    KeyWord,
 };
