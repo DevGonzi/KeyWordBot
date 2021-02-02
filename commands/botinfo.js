@@ -20,7 +20,7 @@ module.exports.run = async (client, msg, args) => {
             },
             {
                 name: '👥 Server Users',
-                value: `Serving ${client.users.cache.size}`,
+                value: `Serving ${client.users.cache.size} Users`,
                 inline: false,
             },
             {

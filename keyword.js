@@ -187,3 +187,42 @@ class actions {
 module.exports = {
     KeyWord,
 };
+
+/*
+
+		if (msg.member.roles.cache.find(role => role.permissions.has('ADMINISTRATOR')) || msg.member.roles.cache.find(role => role.permissions.has('MANAGE_MESSAGES')) || msg.author.id === idGonzi) {
+			let m = msg.content.split(' ');
+			pool.query('SELECT keyword FROM keyworddb WHERE guildId = ?', (guildId), function (err, res, fields) {
+				let keywordlist = [];
+				let count = 0;
+				if(!res) return log.error("!res", JSON.stringify(res))
+				res.forEach((res) => {
+					count++;
+					if (count >= 1) {
+						keywordlist.push("\n" + res.keyword)
+					} else {
+						keywordlist.push(res.keyword)
+					}
+				});
+				if (err) {
+					log.error(err);
+					msg.channel.send('Error!');
+					// msg.react(`❌`);
+					util.delmsg(msg, 2500);
+				} else {
+					if (res.length <= 0) {
+						msg.channel.send('The list is empty!');
+					} else {
+						const itemaddmsg = new Discord.MessageEmbed()
+							.setColor('#0099ff')
+							.setTitle('KeyWord-list:')
+							.setDescription("Type `$KEYWORD` to show the information.")
+							.addField(`Keywords: `, `${keywordlist}`)
+							.setTimestamp()
+							.setFooter(`Keyword list requested from ${msg.author.tag}`);
+						msg.channel.send(itemaddmsg);
+					}
+				};
+			});
+		};
+*/
