@@ -21,7 +21,15 @@ module.exports = async (client, guild) => {
     if (guild) {
         channel = sendGuild.channels.cache.get('800189097339125812');
         if (channel) {
-            const itemaddmsg = new Discord.MessageEmbed().setColor('#0099ff').setTitle('Bot **kicked**!').addField(`Server name: `, `${guild.name}`).addField(`Server ID: `, `${guild.id}`).addField(`Server Owner ID: `, `${guild.ownerID}`).setTimestamp().setFooter(`Guild Owner ${guild.ownerID}`);
+            const itemaddmsg = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Bot **kicked**!')
+                .addField(`Server name: `, `${guild.name}`)
+                .addField(`Server ID: `, `${guild.id}`)
+                .addField(`Server Owner ID: `, `${guild.ownerID}`)
+                .addField(`Member: `, `${guild.memberCount}`, true)
+                .setTimestamp()
+                .setFooter(`Guild Owner ${guild.ownerID}`);
             channel.send(itemaddmsg);
         } else {
             console.log("There's no channel with that ID.");

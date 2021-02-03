@@ -18,6 +18,7 @@ module.exports = async (client, guild) => {
                 .setTitle('Bot **joined**!')
                 .addField(`Server name: `, `${guild.name}`, true)
                 .addField(`Server ID: `, `${guild.id}`, true)
+                .addField(`Member: `, `${guild.memberCount}`, true)
                 .addField(`Server Owner`, client.users.cache.get(guild.ownerID), true)
                 .addField(`Server Owner ID: `, `${guild.ownerID}`, true)
                 .setTimestamp()
