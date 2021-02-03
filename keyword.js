@@ -149,7 +149,14 @@ class Database {
                 if (res[0]) {
                     let keywordfromdb = res[0].keyword;
                     let text = res[0].beschreibung;
-                    const itemaddmsg = new Discord.MessageEmbed().setColor('#0099ff').setTitle('KeyWord Information:').addField(`Keyword: `, `${keywordfromdb}`).addField(`Description: `, `${text}`).setTimestamp().setFooter(`Keyword requested from ${msg.author.tag}`);
+                    const itemaddmsg = new Discord.MessageEmbed()
+                        .setColor('#0099ff')
+                        .setTitle('KeyWord Info:')
+                        .addField(`Keyword: `, `${keywordfromdb}`, true)
+                        //.addField(`Added by:: `, `false`, true)
+                        .addField(`Content: `, `${text}`, true)
+                        .setTimestamp()
+                        .setFooter(`Requested from ${msg.author.tag}`);
                     msg.channel.send(itemaddmsg);
                     util.delmsg(msg, 2500);
                     Database.addUseCount(keywordfromdb, msg.guild.id);
