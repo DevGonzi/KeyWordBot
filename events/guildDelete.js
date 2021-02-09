@@ -8,7 +8,7 @@ module.exports = async (client, guild) => {
 
     console.log('Kicked from a guild: ' + guild.name);
 
-    pool.query(`DELETE FROM keyworddb WHERE keyworddb.guildId = ${guild.id} AND keyworddb.isGlobal = "0"`, guildId, function (err, res, fields) {
+    pool.query(`DELETE FROM keyworddb WHERE keyworddb.guildId = ? AND keyworddb.isGlobal = "0"`, guild.id, function (err, res, fields) {
         if (err) {
             log.error(err);
         }
